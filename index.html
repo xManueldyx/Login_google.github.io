@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio de sesión con Google</title>
+    <meta name="google-signin-client_id"
+        content="931651077814-up7ag765hlr1js3tf1rfb8vuvvgksrie.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+</head>
+
+<body>
+    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+    <a href="#" onclick="signOut();">Cerrar sesión</a>
+
+    <script>
+        // Manejo de errores en la función onSignIn
+        function onSignIn(googleUser) {
+            try {
+                var profile = googleUser.getBasicProfile();
+                console.log('ID: ' + profile.getId()); // No envíes esto a tu backend. Utiliza un token de ID en su lugar.
+                console.log('Nombre: ' + profile.getName());
+                console.log('URL de la imagen: ' + profile.getImageUrl());
+                console.log('Correo electrónico: ' + profile.getEmail()); // Esto es nulo si el alcance 'email' no está presente.
+            } catch (error) {
+                console.error('Error en onSignIn:', error.message);
+                // Aquí puedes mostrar un mensaje al usuario o realizar otras acciones según el tipo de error.
+            }
+        }
+
+        // Función para cerrar sesión
+        function signOut() {
+            var auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(function () {
+                console.log('Usuario cerró sesión.');
+            }).catch(function (error) {
+                console.error('Error al cerrar sesión:', error);
+            });
+        }
+    </script>
+</body>
+
+</html>
